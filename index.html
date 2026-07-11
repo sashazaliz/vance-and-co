@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vance & Co. — Design-Build · Premium Residential Renovation · San Diego</title>
+<meta name="description" content="Vance & Co. is a San Diego design-build firm specializing in premium residential renovation, custom builds, and ADUs. Full gut renovations. No shortcuts.">
+
+<!--
+  PRODUCTION FONTS:
+  Display: Druk Wide (Commercial Type) — condensed industrial grotesque
+  Body: Freight Text Pro — editorial serif with authority
+  DEMO: Bebas Neue + Libre Baskerville + Space Mono (Google Fonts)
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ─────────────────────────────────────────
+   TOKENS — concrete dark, single amber
+───────────────────────────────────────── */
+:root {
+  --concrete:   #1A1A18;
+  --concrete-2: #222220;
+  --concrete-3: #2C2C2A;
+  --concrete-4: #383836;
+  --concrete-5: #444442;
+  --amber:      #D4822A;
+  --amber-lt:   #E8A050;
+  --amber-dim:  rgba(212,130,42,0.12);
+  --amber-glow: rgba(212,130,42,0.22);
+  --cream:      #F2EDE6;
+  --cream-2:    #C8C0B4;
+  --body:       #8A8480;
+  --muted:      #504E4C;
+  --rule:       rgba(242,237,230,0.07);
+
+  --display: 'Bebas Neue', Impact, sans-serif;
+  --serif:   'Libre Baskerville', Georgia, serif;
+  --mono:    'Space Mono', monospace;
+
+  --ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0 }
+html { scroll-behavior: smooth }
+body {
+  background: var(--concrete);
+  color: var(--cream);
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none }
+button { cursor: pointer; border: none; background: none; font-family: var(--serif) }
+img { display: block; max-width: 100%; object-fit: cover }
+
+::selection { background: rgba(212,130,42,0.25); color: var(--cream) }
+::-webkit-scrollbar { width: 5px }
+::-webkit-scrollbar-thumb { background: var(--amber-dim); border-radius: 2px }
+
+/* ─────────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px) }
+  to   { opacity: 1; transform: translateY(0) }
+}
+@keyframes fade-in {
+  from { opacity: 0 } to { opacity: 1 }
+}
+@keyframes ticker {
+  from { transform: translateX(0) }
+  to   { transform: translateX(-50%) }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1 } 50% { opacity: 0.3 }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.9s var(--ease-ui), transform 0.9s var(--ease-ui);
+}
+.reveal.visible { opacity: 1; transform: none }
+.d1 { transition-delay: 0.1s } .d2 { transition-delay: 0.2s }
+.d3 { transition-delay: 0.3s } .d4 { transition-delay: 0.4s }
+
+/* ─────────────────────────────────────────
+   NOISE TEXTURE
+───────────────────────────────────────── */
+.noise {
+  position: fixed; inset: -200%; width: 400%; height: 400%;
+  pointer-events: none; z-index: 1000; opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: noise-shift 0.4s steps(1) infinite;
+}
+@keyframes noise-shift {
+  0%  { transform: translate(0,0) }
+  25% { transform: translate(-4%,3%) }
+  50% { transform: translate(3%,-4%) }
+  75% { transform: translate(-3%,5%) }
+}
+
+/* ─────────────────────────────────────────
+   NAV
+───────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 400;
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  transition: background 0.5s, border-color 0.5s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(26,26,24,0.96);
+  backdrop-filter: blur(20px);
+  border-bottom-color: var(--rule);
+}
+.nav-brand {
+  font-family: var(--display); font-size: 1.4rem;
+  letter-spacing: 0.12em; color: var(--cream);
+  display: flex; align-items: center; gap: 0.6rem;
+}
+.nav-brand-amp { color: var(--amber) }
+.nav-brand-sub {
+  font-family: var(--mono); font-size: 0.72rem;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--body);
+  display: block; margin-top: 0.1rem;
+}
+.nav-links {
+  display: flex; gap: 2.5rem; list-style: none;
+  font-family: var(--mono); font-size: 0.62rem;
+  font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.nav-links a {
+  color: var(--body); transition: color 0.3s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+  height: 1px; background: var(--amber);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s var(--ease-ui);
+}
+.nav-links a:hover { color: var(--cream) }
+.nav-links a:hover::after { transform: scaleX(1) }
+.nav-cta {
+  font-family: var(--mono); font-size: 0.6rem;
+  font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--concrete); background: var(--amber);
+  padding: 0.55rem 1.5rem;
+  transition: all 0.4s var(--ease-ui); position: relative; overflow: hidden;
+}
+.nav-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--amber-lt); transform: translateX(-100%);
+  transition: transform 0.4s var(--ease-ui);
+}
+.nav-cta:hover::before { transform: translateX(0) }
+.nav-cta span { position: relative; z-index: 1 }
+.nav-toggle { display: none; flex-direction: column; gap: 5px }
+.nav-toggle span { display: block; width: 22px; height: 1px; background: var(--cream-2) }
+
+/* ─────────────────────────────────────────
+   HERO — full-bleed, industrial editorial
+───────────────────────────────────────── */
+#hero {
+  height: 100vh; min-height: 640px; max-height: 1080px;
+  position: relative; overflow: hidden;
+  display: flex;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: var(--concrete-2);
+}
+.hero-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center 40%;
+  filter: brightness(0.45) saturate(0.6);
+}
+
+/* Diagonal split overlay */
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    rgba(26,26,24,0.88) 0%,
+    rgba(26,26,24,0.65) 42%,
+    transparent 65%
+  );
+}
+
+/* Large condensed display text — anchored to left, fills height  */
+.hero-content {
+  position: absolute; z-index: 2;
+  bottom: 0; left: 0; right: 0;
+  padding: 0 3rem 4rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 0.68rem;
+  font-weight: 400; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--amber); display: flex; align-items: center; gap: 0.9rem;
+  margin-bottom: 1.2rem;
+  opacity: 0; animation: fade-up 0.8s 0.4s var(--ease-ui) forwards;
+}
+.hero-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--amber) }
+
+.hero-h1 {
+  font-family: var(--display);
+  font-size: clamp(5rem, 11vw, 14rem);
+  line-height: 0.88; letter-spacing: 0.02em;
+  color: var(--cream);
+  opacity: 0; animation: fade-up 1s 0.6s var(--ease-ui) forwards;
+}
+.hero-h1 .line-amber { color: var(--amber) }
+.hero-h1 .line-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(242,237,230,0.2);
+}
+
+/* Right column detail */
+.hero-right {
+  position: absolute; z-index: 2;
+  right: 3rem; bottom: 4rem;
+  text-align: right;
+  opacity: 0; animation: fade-up 0.8s 1.4s var(--ease-ui) forwards;
+}
+.hero-stats {
+  display: flex; flex-direction: column; gap: 1.8rem; align-items: flex-end;
+}
+.hero-stat-num {
+  font-family: var(--display); font-size: 2.8rem;
+  color: var(--amber); line-height: 1; letter-spacing: 0.04em;
+}
+.hero-stat-lbl {
+  font-family: var(--mono); font-size: 0.74rem;
+  font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--body); margin-top: 0.15rem;
+}
+
+.hero-scroll {
+  position: absolute; z-index: 2; bottom: 4rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: 0.7rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+  opacity: 0; animation: fade-in 1s 2s var(--ease-ui) forwards;
+}
+.hero-scroll-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(var(--amber), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+
+/* ─────────────────────────────────────────
+   CAPABILITIES TICKER
+───────────────────────────────────────── */
+.ticker-band {
+  background: var(--amber); padding: 0;
+  overflow: hidden; border-bottom: 2px solid var(--amber-lt);
+}
+.ticker-track {
+  display: flex; white-space: nowrap;
+  animation: ticker 30s linear infinite;
+  font-family: var(--display); font-size: 1rem;
+  letter-spacing: 0.2em; color: var(--concrete);
+}
+.ticker-item { padding: 0.65rem 2.5rem }
+.ticker-sep { padding: 0.65rem 0.5rem; opacity: 0.4 }
+
+/* ─────────────────────────────────────────
+   APPROACH — editorial manifesto
+───────────────────────────────────────── */
+#approach {
+  padding: 9rem 3rem;
+  background: var(--concrete);
+  position: relative; overflow: hidden;
+}
+/* Subtle concrete texture */
+#approach::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  background-size: 48px 48px; pointer-events: none;
+}
+.approach-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 3fr 5fr; gap: 8rem; align-items: start;
+}
+.approach-label {
+  position: sticky; top: 9rem;
+}
+.s-eye {
+  font-family: var(--mono); font-size: 0.64rem;
+  font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: 0.7rem;
+}
+.s-eye::before { content: ''; width: 20px; height: 2px; background: var(--amber) }
+.s-h2 {
+  font-family: var(--display);
+  font-size: clamp(3rem, 5vw, 7rem);
+  line-height: 0.9; letter-spacing: 0.04em; color: var(--cream);
+}
+.s-h2 .amber { color: var(--amber) }
+.s-body { font-size: 0.95rem; line-height: 1.85; color: var(--cream-2) }
+
+.approach-content {}
+.approach-drop {
+  font-family: var(--display); font-size: 7rem;
+  color: var(--amber); opacity: 0.15; line-height: 1;
+  float: left; margin: -0.08em 0.06em 0 0;
+}
+.approach-text {
+  font-family: var(--serif); font-size: 1.05rem;
+  line-height: 1.9; color: var(--cream-2);
+}
+.approach-text p + p { margin-top: 1.4em }
+.approach-text strong { color: var(--cream); font-weight: 700 }
+
+.approach-pillars {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--rule); margin-top: 3.5rem;
+}
+.pillar {
+  background: var(--concrete); padding: 2rem 1.8rem;
+  transition: background 0.4s;
+}
+.pillar:hover { background: var(--concrete-3) }
+.pillar-num {
+  font-family: var(--display); font-size: 3rem;
+  color: var(--amber); opacity: 0.2; line-height: 1; margin-bottom: 0.5rem;
+}
+.pillar-name {
+  font-family: var(--display); font-size: 1.5rem;
+  letter-spacing: 0.06em; color: var(--cream); margin-bottom: 0.6rem;
+}
+.pillar-body { font-size: 0.82rem; line-height: 1.75; color: var(--cream-2) }
+
+/* ─────────────────────────────────────────
+   PROJECTS — BEFORE / AFTER SLIDERS
+   Signature Feature #1
+───────────────────────────────────────── */
+#projects {
+  padding: 0 0 9rem;
+  background: var(--concrete);
+  border-top: 1px solid var(--rule);
+}
+
+.projects-header {
+  padding: 9rem 3rem 5rem;
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: end;
+}
+
+/* Project item */
+.project {
+  max-width: 1280px; margin: 0 auto;
+  margin-bottom: 1px;
+  display: grid; grid-template-columns: 7fr 5fr;
+  align-items: stretch;
+  background: var(--concrete-2);
+  border-top: 1px solid var(--rule);
+}
+.project:last-child { border-bottom: 1px solid var(--rule) }
+
+/* ── Before/After Slider ── */
+.ba-wrap {
+  position: relative; overflow: hidden;
+  min-height: 480px; user-select: none;
+}
+.ba-after {
+  position: absolute; inset: 0;
+}
+.ba-after img {
+  width: 100%; height: 100%;
+  filter: brightness(0.88) saturate(0.85);
+}
+.ba-before {
+  position: absolute; inset: 0; overflow: hidden;
+  clip-path: inset(0 50% 0 0); /* updated by JS */
+  transition: none;
+}
+.ba-before img {
+  width: 100%; height: 100%;
+  filter: grayscale(100%) sepia(35%) brightness(0.58) contrast(0.88);
+}
+
+/* Divider handle */
+.ba-handle {
+  position: absolute; top: 0; bottom: 0; z-index: 10;
+  left: 50%; transform: translateX(-50%);
+  width: 3px; background: var(--amber);
+  cursor: ew-resize;
+}
+.ba-handle::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--amber); border: 3px solid var(--cream);
+  box-shadow: 0 4px 20px rgba(212,130,42,0.4);
+}
+.ba-handle::after {
+  content: '◀ ▶';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.72rem; color: var(--concrete); letter-spacing: -1px;
+  z-index: 1; font-weight: 700;
+}
+
+/* Labels */
+.ba-label {
+  position: absolute; top: 1.2rem; z-index: 5;
+  font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 0.28rem 0.8rem;
+}
+.ba-label-before {
+  left: 1.2rem;
+  background: rgba(26,26,24,0.8); color: var(--cream-2);
+}
+.ba-label-after {
+  right: 1.2rem;
+  background: var(--amber); color: var(--concrete);
+}
+
+/* Project detail panel — Signature Feature #2: Bloomberg-style spec cards */
+.project-detail {
+  padding: 3.5rem 3rem;
+  display: flex; flex-direction: column; justify-content: space-between;
+  border-left: 1px solid var(--rule);
+}
+.project-index {
+  font-family: var(--mono); font-size: 0.7rem;
+  font-weight: 400; letter-spacing: 0.22em; color: var(--cream-2);
+  margin-bottom: 1.5rem;
+}
+.project-name {
+  font-family: var(--display); font-size: clamp(1.8rem, 3vw, 3.2rem);
+  letter-spacing: 0.05em; color: var(--cream); line-height: 0.95; margin-bottom: 0.5rem;
+}
+.project-location {
+  font-family: var(--mono); font-size: 0.62rem;
+  font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1.5rem;
+}
+.project-desc {
+  font-family: var(--serif); font-size: 0.88rem;
+  line-height: 1.8; color: var(--cream-2); margin-bottom: 2rem;
+}
+
+/* Spec card — Bloomberg terminal aesthetic */
+.spec-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: var(--rule); margin-bottom: 1.8rem;
+}
+.spec-cell {
+  background: var(--concrete-3); padding: 0.9rem 1rem;
+}
+.spec-val {
+  font-family: var(--mono); font-size: 1.1rem;
+  font-weight: 700; color: var(--amber); line-height: 1;
+  letter-spacing: -0.01em;
+}
+.spec-key {
+  font-family: var(--mono); font-size: 0.7rem;
+  font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--body); margin-top: 0.2rem;
+}
+.project-scope {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+}
+.scope-tag {
+  font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cream-2); border: 1px solid var(--rule);
+  padding: 0.2rem 0.6rem; transition: all 0.3s;
+}
+.scope-tag:hover { border-color: var(--amber); color: var(--amber) }
+
+/* ─────────────────────────────────────────
+   SERVICES — horizontal editorial list
+───────────────────────────────────────── */
+#services {
+  padding: 9rem 3rem;
+  background: var(--concrete-2);
+  border-top: 1px solid var(--rule);
+}
+.services-inner { max-width: 1280px; margin: 0 auto }
+.services-head {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+  align-items: end; margin-bottom: 5rem;
+}
+.service-list { display: flex; flex-direction: column }
+.service-item {
+  display: grid; grid-template-columns: 60px 1fr auto;
+  gap: 2rem; align-items: center;
+  padding: 2.2rem 0; border-bottom: 1px solid var(--rule);
+  cursor: pointer; transition: padding 0.4s var(--ease-ui);
+  position: relative;
+}
+.service-item::before {
+  content: ''; position: absolute; left: -3rem; top: 0; bottom: 0;
+  width: 3px; background: var(--amber);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform 0.4s var(--ease-ui);
+}
+.service-item:hover::before { transform: scaleY(1) }
+.service-item:hover { padding-left: 0.5rem }
+.svc-num {
+  font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 400; letter-spacing: 0.1em; color: var(--body);
+}
+.svc-name {
+  font-family: var(--display); font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  letter-spacing: 0.05em; color: var(--cream); transition: color 0.3s;
+}
+.service-item:hover .svc-name { color: var(--amber) }
+.svc-desc {
+  font-family: var(--serif); font-size: 0.82rem;
+  line-height: 1.75; color: var(--cream-2); margin-top: 0.4rem; max-width: 480px;
+}
+.svc-range {
+  font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 700; color: var(--amber); white-space: nowrap;
+  text-align: right;
+}
+.svc-range-lbl {
+  font-family: var(--mono); font-size: 0.7rem;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--body); margin-top: 0.15rem;
+}
+
+/* ─────────────────────────────────────────
+   PROCESS — numbered editorial
+───────────────────────────────────────── */
+#process {
+  padding: 9rem 3rem;
+  background: var(--concrete);
+  border-top: 1px solid var(--rule);
+}
+.process-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 3fr 7fr; gap: 8rem; align-items: start;
+}
+.process-label { position: sticky; top: 9rem }
+.process-steps { display: flex; flex-direction: column }
+.process-step {
+  display: grid; grid-template-columns: 80px 1fr;
+  gap: 2rem; padding: 3rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+.process-step:last-child { border-bottom: none }
+.step-num {
+  font-family: var(--display); font-size: 3.5rem;
+  color: var(--amber); opacity: 0.35; line-height: 1;
+  letter-spacing: 0.04em; margin-top: -0.2rem;
+}
+.step-name {
+  font-family: var(--display); font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+  letter-spacing: 0.05em; color: var(--cream); margin-bottom: 0.6rem;
+}
+.step-body {
+  font-family: var(--serif); font-size: 0.92rem;
+  line-height: 1.85; color: var(--cream-2);
+}
+.step-duration {
+  font-family: var(--mono); font-size: 0.6rem;
+  font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--amber); margin-top: 0.8rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.step-duration::before {
+  content: ''; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--amber); flex-shrink: 0;
+  animation: pulse-dot 2s infinite;
+}
+
+/* ─────────────────────────────────────────
+   TESTIMONIALS
+───────────────────────────────────────── */
+#testimonials {
+  padding: 9rem 3rem;
+  background: var(--concrete-2);
+  border-top: 1px solid var(--rule);
+}
+.testi-inner { max-width: 1280px; margin: 0 auto }
+.testi-head {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+  align-items: end; margin-bottom: 5rem;
+}
+.testi-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--rule);
+}
+.testi-card {
+  background: var(--concrete-2); padding: 2.8rem 2.2rem;
+  transition: background 0.4s; position: relative;
+}
+.testi-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 100%;
+  height: 2px; background: var(--amber);
+  transition: right 0.5s var(--ease-ui);
+}
+.testi-card:hover { background: var(--concrete-3) }
+.testi-card:hover::before { right: 0 }
+.testi-mark {
+  font-family: var(--display); font-size: 4rem;
+  color: var(--amber); opacity: 0.2; line-height: 0.8; margin-bottom: 1rem;
+}
+.testi-quote {
+  font-family: var(--serif); font-style: italic; font-size: 1rem;
+  line-height: 1.75; color: var(--cream-2); margin-bottom: 1.5rem;
+}
+.testi-name { font-family: var(--mono); font-size: 0.64rem; font-weight: 700; letter-spacing: 0.1em; color: var(--cream) }
+.testi-detail {
+  font-family: var(--mono); font-size: 0.74rem;
+  font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--body); margin-top: 0.2rem;
+}
+
+/* ─────────────────────────────────────────
+   CONTACT
+───────────────────────────────────────── */
+#contact {
+  padding: 9rem 3rem 8rem;
+  background: var(--concrete);
+  border-top: 2px solid var(--amber);
+}
+.contact-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 9rem; align-items: start;
+}
+.contact-h2 {
+  font-family: var(--display);
+  font-size: clamp(3rem, 6vw, 8rem);
+  line-height: 0.88; letter-spacing: 0.04em; color: var(--cream);
+  margin-bottom: 2rem;
+}
+.contact-h2 .amber { color: var(--amber) }
+.contact-body {
+  font-family: var(--serif); font-size: 1rem;
+  line-height: 1.85; color: var(--cream-2); margin-bottom: 2.5rem;
+}
+.contact-phone {
+  font-family: var(--display); font-size: 2.2rem;
+  letter-spacing: 0.06em; color: var(--amber);
+  display: block; margin-bottom: 0.4rem;
+  transition: color 0.3s, letter-spacing 0.4s var(--ease-ui);
+}
+.contact-phone:hover { color: var(--cream); letter-spacing: 0.1em }
+.contact-email {
+  font-family: var(--mono); font-size: 0.7rem;
+  font-weight: 400; letter-spacing: 0.14em; color: var(--body);
+  display: block; margin-bottom: 2rem; transition: color 0.3s;
+}
+.contact-email:hover { color: var(--amber) }
+.contact-address {
+  font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 400; letter-spacing: 0.1em; color: var(--body); line-height: 2.2;
+}
+
+/* Form */
+.form-row { margin-bottom: 1rem }
+.form-label {
+  font-family: var(--mono); font-size: 0.6rem;
+  font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--cream-2); display: block; margin-bottom: 0.4rem;
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%; background: var(--concrete-3);
+  border: 1px solid var(--rule); color: var(--cream-2);
+  font-family: var(--serif); font-size: 0.92rem;
+  padding: 0.78rem 1rem; outline: none; border-radius: 0; appearance: none;
+  transition: border-color 0.3s, background 0.3s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: rgba(212,130,42,0.5); background: var(--concrete-4);
+}
+.form-input::placeholder, .form-textarea::placeholder { color: var(--muted) }
+.form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23504E4C'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 1rem center;
+  background-color: var(--concrete-3); padding-right: 2.5rem; cursor: pointer;
+}
+.form-select option { background: var(--concrete-3) }
+.form-textarea { resize: vertical; min-height: 100px; line-height: 1.65 }
+.form-submit {
+  width: 100%; margin-top: 0.5rem;
+  font-family: var(--display); font-size: 1.1rem; letter-spacing: 0.12em;
+  color: var(--concrete); background: var(--amber);
+  padding: 0.9rem 2rem;
+  transition: all 0.4s var(--ease-ui); position: relative; overflow: hidden;
+}
+.form-submit::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--amber-lt); transform: translateX(-100%);
+  transition: transform 0.4s var(--ease-ui);
+}
+.form-submit:hover::before { transform: translateX(0) }
+.form-submit span { position: relative; z-index: 1 }
+
+/* ─────────────────────────────────────────
+   FOOTER — angular credential band
+   Distinct from all previous sites
+───────────────────────────────────────── */
+footer {
+  background: var(--concrete-2);
+  border-top: 1px solid var(--rule);
+}
+.footer-top {
+  padding: 5rem 3rem;
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2.5fr 1fr 1fr 1fr; gap: 5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.footer-brand-name {
+  font-family: var(--display); font-size: 1.6rem;
+  letter-spacing: 0.1em; color: var(--cream); margin-bottom: 0.3rem;
+}
+.footer-brand-name span { color: var(--amber) }
+.footer-brand-sub {
+  font-family: var(--mono); font-size: 0.74rem;
+  letter-spacing: 0.22em; text-transform: uppercase; color: var(--body); margin-bottom: 1.1rem;
+}
+.footer-brand-desc {
+  font-family: var(--serif); font-size: 0.85rem; line-height: 1.8; color: var(--body);
+  max-width: 260px;
+}
+.footer-col-title {
+  font-family: var(--mono); font-size: 0.6rem;
+  font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--amber); margin-bottom: 1.2rem;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem }
+.footer-links a { font-family: var(--serif); font-size: 0.88rem; color: var(--body); transition: color 0.3s }
+.footer-links a:hover { color: var(--amber) }
+
+/* Angular credential bar — zigzag, not wordmark, not seal */
+.footer-angle-bar {
+  background: var(--amber);
+  display: flex; overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 2% 100%, 0 70%);
+}
+.footer-angle-item {
+  flex: 1; padding: 1.8rem 2rem 2.2rem;
+  border-right: 1px solid rgba(26,26,24,0.15);
+  text-align: center;
+}
+.footer-angle-item:last-child { border-right: none }
+.footer-angle-num {
+  font-family: var(--display); font-size: 2rem;
+  letter-spacing: 0.06em; color: var(--concrete); line-height: 1;
+}
+.footer-angle-lbl {
+  font-family: var(--mono); font-size: 0.72rem;
+  font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(26,26,24,0.6); margin-top: 0.25rem;
+}
+.footer-bottom {
+  padding: 1.5rem 3rem 2rem;
+  max-width: 1280px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono); font-size: 0.74rem;
+  font-weight: 400; letter-spacing: 0.1em; color: var(--muted);
+  flex-wrap: wrap; gap: 1rem;
+}
+
+/* ─────────────────────────────────────────
+   MOBILE MENU
+───────────────────────────────────────── */
+.mob-menu {
+  position: fixed; inset: 0; z-index: 600;
+  background: rgba(26,26,24,0.98); backdrop-filter: blur(20px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2.5rem;
+  transform: translateX(100%); transition: transform 0.6s var(--ease-ui);
+}
+.mob-menu.open { transform: translateX(0) }
+.mob-close { position: absolute; top: 2rem; right: 3rem; font-size: 1rem; color: var(--muted); cursor: pointer; transition: color 0.3s }
+.mob-close:hover { color: var(--amber) }
+.mob-menu a {
+  font-family: var(--display); font-size: 3.5rem;
+  letter-spacing: 0.08em; color: var(--cream);
+  transition: color 0.3s;
+}
+.mob-menu a:hover { color: var(--amber) }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media(max-width: 1100px) {
+  nav { padding: 0 1.5rem }
+  .nav-links, .nav-cta { display: none }
+  .nav-toggle { display: flex }
+  .hero-right { display: none }
+  .approach-inner, .process-inner, .contact-inner { grid-template-columns: 1fr; gap: 3rem }
+  .approach-label, .process-label { position: static }
+  .project { grid-template-columns: 1fr }
+  .project-detail { border-left: none; border-top: 1px solid var(--rule) }
+  .ba-wrap { min-height: 300px }
+  .services-head, .testi-head { grid-template-columns: 1fr; gap: 1.5rem }
+  .testi-grid { grid-template-columns: 1fr }
+  .projects-header { grid-template-columns: 1fr; gap: 1.5rem }
+  .approach-pillars { grid-template-columns: 1fr }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 3rem 1.5rem }
+  .footer-angle-bar { clip-path: none }
+  .footer-bottom { padding: 1.5rem }
+  #approach, #projects, #services, #process, #testimonials, #contact { padding-left: 1.5rem; padding-right: 1.5rem }
+  .projects-header { padding-left: 1.5rem; padding-right: 1.5rem }
+}
+@media(max-width: 640px) {
+  .hero-h1 { font-size: clamp(3.8rem, 14vw, 7rem) }
+  .spec-grid { grid-template-columns: 1fr 1fr }
+  .footer-top { grid-template-columns: 1fr }
+  .footer-angle-bar { flex-wrap: wrap }
+  .footer-angle-item { min-width: 50% }
+}
+</style>
+</head>
+<body>
+
+<div class="noise" aria-hidden="true"></div>
+
+<!-- Mobile menu -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="closeMob()">✕</button>
+  <a href="#projects" onclick="closeMob()">Projects</a>
+  <a href="#services" onclick="closeMob()">Services</a>
+  <a href="#process" onclick="closeMob()">Process</a>
+  <a href="#testimonials" onclick="closeMob()">Clients</a>
+  <a href="#contact" onclick="closeMob()">Start a Project</a>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <div>
+    <div class="nav-brand">Vance <span class="nav-brand-amp">&</span> Co.</div>
+    <div class="nav-brand-sub">Design-Build · San Diego</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta"><span>Start a Project</span></a>
+  <button class="nav-toggle" onclick="openMob()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=90" alt="Vance & Co. project" loading="eager"/>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">San Diego · Est. 2009</div>
+    <h1 class="hero-h1">
+      <div>BUILD</div>
+      <div class="line-amber">BETTER.</div>
+      <div class="line-outline">ALWAYS.</div>
+    </h1>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">$120M+</div>
+        <div class="hero-stat-lbl">In Completed Projects</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">340+</div>
+        <div class="hero-stat-lbl">Projects Delivered</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">15</div>
+        <div class="hero-stat-lbl">Years in San Diego</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ═══ TICKER ═══ -->
+<div class="ticker-band">
+  <div class="ticker-track">
+    <span class="ticker-item">FULL GUT RENOVATIONS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">CUSTOM HOME BUILDS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">KITCHEN & BATH</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">ADU & GRANNY FLATS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">STRUCTURAL ADDITIONS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">OUTDOOR LIVING</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">DESIGN-BUILD</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">FULL GUT RENOVATIONS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">CUSTOM HOME BUILDS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">KITCHEN & BATH</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">ADU & GRANNY FLATS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">STRUCTURAL ADDITIONS</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">OUTDOOR LIVING</span><span class="ticker-sep">◆</span>
+    <span class="ticker-item">DESIGN-BUILD</span><span class="ticker-sep">◆</span>
+  </div>
+</div>
+
+<!-- ═══ APPROACH ═══ -->
+<section id="approach">
+  <div class="approach-inner max-w" style="max-width:1280px;margin:0 auto">
+    <div class="approach-label reveal">
+      <div class="s-eye">The Vance Way</div>
+      <h2 class="s-h2">NO<br/><span class="amber">SHORT</span><br/>CUTS.</h2>
+    </div>
+
+    <div class="reveal d1">
+      <span class="approach-drop">W</span>
+      <div class="approach-text">
+        <p>e opened in 2009 with a single thesis: the residential construction industry had a quality problem that no one was willing to name out loud. Timelines were fiction. Budgets were estimates that contractors had no intention of honoring. The "design" in design-build usually meant someone's brother-in-law had an opinion.</p>
+
+        <p>Vance & Co. was built around a different idea. <strong>Every project has a fixed-scope contract. Every timeline has a daily accountability log. Every material decision comes with a documented alternative and a price difference.</strong> Our clients know exactly what they're getting before the first nail is pulled.</p>
+
+        <p>We are selective. We take on approximately 18 projects per year, which means we are never overextended, never shuffling crews between sites, never treating your home as a low-priority job. When you hire Vance & Co., you are one of eighteen families we are responsible to that year. That is the relationship.</p>
+      </div>
+
+      <div class="approach-pillars" style="margin-top:3.5rem">
+        <div class="pillar">
+          <div class="pillar-num">01</div>
+          <div class="pillar-name">FIXED-SCOPE CONTRACTS</div>
+          <p class="pillar-body">We don't give ranges and hope for the best. Every engagement begins with a detailed scope document. Price changes only when the scope changes — and only with written client approval.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">02</div>
+          <div class="pillar-name">IN-HOUSE DESIGN</div>
+          <p class="pillar-body">Our design team works in the same building as our build team. When design and construction are siloed, problems are discovered on-site. We find them on paper, before anything costs money to fix.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">03</div>
+          <div class="pillar-name">DAILY SITE REPORTS</div>
+          <p class="pillar-body">Every client receives a daily progress photo and written summary. Not weekly. Not "we'll call you if there's an issue." Daily. Because it's your home and you deserve to know what's happening in it.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-num">04</div>
+          <div class="pillar-name">2-YEAR WARRANTY</div>
+          <p class="pillar-body">Every project comes with a 2-year comprehensive warranty on workmanship. Not the industry-standard 1-year. Not a warranty that requires six phone calls to activate. Two years, in writing, starting at final walkthrough.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS — BEFORE/AFTER SLIDERS ═══ -->
+<section id="projects">
+  <div class="projects-header">
+    <div class="reveal">
+      <div class="s-eye">Selected Projects</div>
+      <h2 class="s-h2">THE<br/><span class="amber">WORK.</span></h2>
+    </div>
+    <p class="s-body reveal d1">Drag the handle on any project to reveal the before. Every transformation shown was delivered on-time and within the fixed-scope contract.</p>
+  </div>
+
+  <!-- Project 1 -->
+  <div class="project reveal">
+    <div class="ba-wrap" id="ba0">
+      <div class="ba-after">
+        <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=1200&q=90" alt="Bird Rock kitchen renovation"/>
+      </div>
+      <div class="ba-before" id="ba-before0">
+        <img src="https://images.unsplash.com/photo-1556911220-bff31c812dba?w=1200&q=90" alt="Bird Rock kitchen before"/>
+      </div>
+      <div class="ba-handle" id="ba-handle0"></div>
+      <div class="ba-label ba-label-before">Before</div>
+      <div class="ba-label ba-label-after">After</div>
+    </div>
+    <div class="project-detail">
+      <div>
+        <div class="project-index">Project 01 / 2024</div>
+        <div class="project-name">BIRD ROCK KITCHEN</div>
+        <div class="project-location">La Jolla · Bird Rock</div>
+        <p class="project-desc">Complete kitchen demolition and rebuild in a 1962 Bird Rock single-family home. Original layout had separated the kitchen from the living area by a load-bearing wall — structural removal opened the full ground floor to an open-plan configuration. Custom white oak cabinetry, honed Calacatta marble, and Lacanche range.</p>
+        <div class="spec-grid">
+          <div class="spec-cell">
+            <div class="spec-val">$420K</div>
+            <div class="spec-key">Project Value</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">14 WKS</div>
+            <div class="spec-key">Duration</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">680 SF</div>
+            <div class="spec-key">Scope Area</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">100%</div>
+            <div class="spec-key">On Budget</div>
+          </div>
+        </div>
+        <div class="project-scope">
+          <span class="scope-tag">Structural Removal</span>
+          <span class="scope-tag">Custom Cabinetry</span>
+          <span class="scope-tag">Electrical Upgrade</span>
+          <span class="scope-tag">Plumbing Reroute</span>
+          <span class="scope-tag">Marble Work</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="project reveal">
+    <div class="ba-wrap" id="ba1">
+      <div class="ba-after">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=90" alt="Del Mar full renovation after"/>
+      </div>
+      <div class="ba-before" id="ba-before1">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=90" alt="Del Mar full gut before"/>
+      </div>
+      <div class="ba-handle" id="ba-handle1"></div>
+      <div class="ba-label ba-label-before">Before</div>
+      <div class="ba-label ba-label-after">After</div>
+    </div>
+    <div class="project-detail">
+      <div>
+        <div class="project-index">Project 02 / 2024</div>
+        <div class="project-name">DEL MAR FULL GUT</div>
+        <div class="project-location">Del Mar · Shores</div>
+        <p class="project-desc">Full gut renovation of a 1978 Del Mar Shores property. Every surface replaced. Structural reconfiguration removed three interior walls to create a single open-plan main floor. New mechanicals throughout — HVAC, electrical panel upgrade to 400A, full replumb in PEX. Exterior redone in board-formed concrete and cedar.</p>
+        <div class="spec-grid">
+          <div class="spec-cell">
+            <div class="spec-val">$1.1M</div>
+            <div class="spec-key">Project Value</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">38 WKS</div>
+            <div class="spec-key">Duration</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">2,840 SF</div>
+            <div class="spec-key">Scope Area</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">+$12K</div>
+            <div class="spec-key">Over Scope¹</div>
+          </div>
+        </div>
+        <div class="project-scope">
+          <span class="scope-tag">Full Gut</span>
+          <span class="scope-tag">Structural</span>
+          <span class="scope-tag">HVAC</span>
+          <span class="scope-tag">400A Electrical</span>
+          <span class="scope-tag">Full Replumb</span>
+          <span class="scope-tag">Exterior</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project 3 -->
+  <div class="project reveal">
+    <div class="ba-wrap" id="ba2">
+      <div class="ba-after">
+        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=90" alt="La Jolla primary bath after"/>
+      </div>
+      <div class="ba-before" id="ba-before2">
+        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1200&q=90" alt="La Jolla primary bath before"/>
+      </div>
+      <div class="ba-handle" id="ba-handle2"></div>
+      <div class="ba-label ba-label-before">Before</div>
+      <div class="ba-label ba-label-after">After</div>
+    </div>
+    <div class="project-detail">
+      <div>
+        <div class="project-index">Project 03 / 2023</div>
+        <div class="project-name">LA JOLLA PRIMARY BATH</div>
+        <div class="project-location">La Jolla · Village</div>
+        <p class="project-desc">Primary bathroom transformation in a Prospect Street residence. The original 1990s bath was replaced with a full spa-style suite — steam shower with 24×48 Porcelain slabs, freestanding soaking tub with floor-mounted tub filler, custom floating vanity in smoked walnut, and radiant floor heat throughout. Plumbing entirely relocated.</p>
+        <div class="spec-grid">
+          <div class="spec-cell">
+            <div class="spec-val">$185K</div>
+            <div class="spec-key">Project Value</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">9 WKS</div>
+            <div class="spec-key">Duration</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">280 SF</div>
+            <div class="spec-key">Scope Area</div>
+          </div>
+          <div class="spec-cell">
+            <div class="spec-val">100%</div>
+            <div class="spec-key">On Budget</div>
+          </div>
+        </div>
+        <div class="project-scope">
+          <span class="scope-tag">Plumbing Relocation</span>
+          <span class="scope-tag">Steam Shower</span>
+          <span class="scope-tag">Radiant Heat</span>
+          <span class="scope-tag">Custom Millwork</span>
+          <span class="scope-tag">Large Format Tile</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="services-inner">
+    <div class="services-head">
+      <div class="reveal">
+        <div class="s-eye">What We Build</div>
+        <h2 class="s-h2">EVERY<br/><span class="amber">SCOPE.</span></h2>
+      </div>
+      <p class="s-body reveal d1">From single-room renovations to complete ground-up custom builds. Every service is delivered under the same fixed-scope contract and daily accountability standard.</p>
+    </div>
+
+    <div class="service-list">
+      <div class="service-item reveal">
+        <div class="svc-num">01</div>
+        <div>
+          <div class="svc-name">FULL GUT RENOVATION</div>
+          <p class="svc-desc">Complete demolition and rebuild of existing residential structures. Every system replaced — structural, mechanical, electrical, plumbing. The result is a home that performs and looks like new construction in a location that's already yours.</p>
+        </div>
+        <div>
+          <div class="svc-range">$400K–$2M+</div>
+          <div class="svc-range-lbl">Typical Range</div>
+        </div>
+      </div>
+      <div class="service-item reveal">
+        <div class="svc-num">02</div>
+        <div>
+          <div class="svc-name">CUSTOM HOME BUILD</div>
+          <p class="svc-desc">Ground-up custom construction on client-owned lots. We manage architecture, engineering, permitting, and construction as a single integrated team. No gap between what was designed and what was built.</p>
+        </div>
+        <div>
+          <div class="svc-range">$800K–$3M+</div>
+          <div class="svc-range-lbl">Typical Range</div>
+        </div>
+      </div>
+      <div class="service-item reveal">
+        <div class="svc-num">03</div>
+        <div>
+          <div class="svc-name">KITCHEN & BATH</div>
+          <p class="svc-desc">Premium single-room transformations. We do not offer budget kitchen remodels. Our kitchen and bath work begins at $85K and reflects the same material and execution standards as our full renovations.</p>
+        </div>
+        <div>
+          <div class="svc-range">$85K–$450K</div>
+          <div class="svc-range-lbl">Typical Range</div>
+        </div>
+      </div>
+      <div class="service-item reveal">
+        <div class="svc-num">04</div>
+        <div>
+          <div class="svc-name">ADU & ADDITIONS</div>
+          <p class="svc-desc">Accessory dwelling units, garage conversions, and structural additions. San Diego's ADU regulations are complex — we handle permitting, structural engineering, and utility coordination in-house.</p>
+        </div>
+        <div>
+          <div class="svc-range">$180K–$600K</div>
+          <div class="svc-range-lbl">Typical Range</div>
+        </div>
+      </div>
+      <div class="service-item reveal" style="border-bottom:none">
+        <div class="svc-num">05</div>
+        <div>
+          <div class="svc-name">OUTDOOR LIVING</div>
+          <p class="svc-desc">Covered outdoor kitchens, pool surrounds, hardscaping, and landscape integration. In San Diego's climate, outdoor living spaces are year-round rooms — we design and build them that way.</p>
+        </div>
+        <div>
+          <div class="svc-range">$60K–$350K</div>
+          <div class="svc-range-lbl">Typical Range</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS ═══ -->
+<section id="process">
+  <div class="process-inner max-w" style="max-width:1280px;margin:0 auto">
+    <div class="process-label reveal">
+      <div class="s-eye">How It Works</div>
+      <h2 class="s-h2">ZERO<br/><span class="amber">SUR</span><br/>PRIS<br/>ES.</h2>
+    </div>
+
+    <div class="reveal d1">
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <div>
+            <div class="step-name">DISCOVERY CALL</div>
+            <p class="step-body">A 30-minute call with our project director to understand your scope, timeline, and budget range. We will tell you immediately if your project is a fit for us and if our typical cost range aligns with your expectations. We don't waste your time with a site visit if the numbers won't work.</p>
+            <div class="step-duration">Week 1 · 30 Minutes</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <div>
+            <div class="step-name">SITE ASSESSMENT & SCOPE</div>
+            <p class="step-body">Our design-build team visits the property, documents existing conditions, and develops a detailed written scope of work. This document drives everything — design decisions, material selections, subcontractor bids, timeline. It takes 2–3 weeks to produce properly and it is not a shortcut we take.</p>
+            <div class="step-duration">Weeks 2–4 · Site Visit + Documentation</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <div>
+            <div class="step-name">FIXED-SCOPE CONTRACT</div>
+            <p class="step-body">You receive a single document with the complete scope, a line-item budget with no ranges, a day-by-day project schedule, and the terms of the 2-year workmanship warranty. You sign one contract. You don't hear "unforeseen conditions" as a reason to increase costs unless something genuinely unforeseen happens — and we define what that means in writing.</p>
+            <div class="step-duration">Week 4–5 · Contract Execution</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <div>
+            <div class="step-name">BUILD & DAILY REPORTING</div>
+            <p class="step-body">Work begins on the contracted start date. Every day, your project manager sends a photo report and written summary of completed work, next day's activities, and any open items requiring your input. You are never waiting for a call back. You are never wondering what's happening in your home.</p>
+            <div class="step-duration">Per Contract Schedule · Daily Updates</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">05</div>
+          <div>
+            <div class="step-name">FINAL WALKTHROUGH & WARRANTY</div>
+            <p class="step-body">Every project ends with a joint walkthrough with your project director. A punch list is generated, resolved within 10 business days, and signed off by you. Your 2-year warranty begins at your signature. Our service team remains reachable by direct phone line — not a ticketing system, not an email queue.</p>
+            <div class="step-duration">Final Week · Warranty Begins Day 1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section id="testimonials">
+  <div class="testi-inner">
+    <div class="testi-head">
+      <div class="reveal">
+        <div class="s-eye">Client Feedback</div>
+        <h2 class="s-h2">WHAT<br/><span class="amber">THEY</span><br/>SAY.</h2>
+      </div>
+      <p class="s-body reveal d1">We don't collect Google reviews. We collect referrals. Every project below came through a client who'd worked with us before. A few chose to share their experience in writing.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-mark">"</div>
+        <p class="testi-quote">The daily photo reports were something I didn't know I needed until I had them. We were living in a rental during the renovation and the reports made us feel like we were on the job every day. Not once did we feel out of the loop.</p>
+        <div class="testi-name">MICHAEL & SARAH T.</div>
+        <div class="testi-detail">Del Mar Full Gut · $1.1M · 2024</div>
+      </div>
+      <div class="testi-card reveal d1">
+        <div class="testi-mark">"</div>
+        <p class="testi-quote">We had a contractor before Vance who gave us a "range" and then hit the top of it immediately. Vance gave us a number and hit it. The Bird Rock kitchen came in at exactly the contract price. I have told everyone I know.</p>
+        <div class="testi-name">JAMES R.</div>
+        <div class="testi-detail">Bird Rock Kitchen · $420K · 2024</div>
+      </div>
+      <div class="testi-card reveal d2">
+        <div class="testi-mark">"</div>
+        <p class="testi-quote">The fixed-scope contract was the thing that made my wife say yes. She had real anxiety about renovation horror stories. We read every line, we understood every number, and then we signed it. The project went exactly as described. Exactly.</p>
+        <div class="testi-name">DAVID K.</div>
+        <div class="testi-detail">La Jolla Primary Suite · $185K · 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="contact-inner max-w" style="max-width:1280px;margin:0 auto">
+    <div class="reveal">
+      <div class="s-eye">Start a Project</div>
+      <h2 class="contact-h2">LET'S<br/><span class="amber">BUILD.</span></h2>
+      <p class="contact-body">We take on approximately 18 projects per year. If you're planning a renovation or custom build in San Diego, the conversation starts with a 30-minute call. No obligation. No sales pitch. Just an honest assessment of whether we're the right fit.</p>
+      <a href="tel:6195550382" class="contact-phone">(619) 555-0382</a>
+      <a href="mailto:hello@vanceandco.build" class="contact-email">hello@vanceandco.build</a>
+      <div class="contact-address">
+        3850 Ruffin Road, Suite 210<br/>
+        San Diego, California 92123<br/><br/>
+        Monday – Friday · 7:00am – 5:00pm<br/>
+        Saturday by appointment
+      </div>
+    </div>
+
+    <div class="reveal d1">
+      <div class="form-row">
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="Full name"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="your@email.com"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Phone</label>
+        <input type="tel" class="form-input" placeholder="(619) 000-0000"/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Project Type</label>
+        <select class="form-select">
+          <option value="" disabled selected>Select scope</option>
+          <option>Full Gut Renovation</option>
+          <option>Custom Home Build</option>
+          <option>Kitchen Renovation</option>
+          <option>Bathroom Renovation</option>
+          <option>ADU / Addition</option>
+          <option>Outdoor Living</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Approximate Budget</label>
+        <select class="form-select">
+          <option value="" disabled selected>Select range</option>
+          <option>$85K – $200K</option>
+          <option>$200K – $500K</option>
+          <option>$500K – $1M</option>
+          <option>$1M – $2M</option>
+          <option>$2M+</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Project Address / Neighborhood</label>
+        <input type="text" class="form-input" placeholder="e.g. La Jolla, Del Mar, Rancho Santa Fe..."/>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Tell us about your project</label>
+        <textarea class="form-textarea" placeholder="What are you trying to accomplish? What's your timeline? Anything we should know before we talk?"></textarea>
+      </div>
+      <button type="button" class="form-submit"><span>SUBMIT INQUIRY</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-name">Vance <span>&</span> Co.</div>
+      <div class="footer-brand-sub">Design-Build · San Diego · Est. 2009</div>
+      <p class="footer-brand-desc">Premium residential renovation and custom home building. Fixed-scope contracts. Daily reporting. 2-year warranty. No shortcuts.</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Full Gut Renovation</a></li>
+        <li><a href="#services">Custom Home Build</a></li>
+        <li><a href="#services">Kitchen & Bath</a></li>
+        <li><a href="#services">ADU & Additions</a></li>
+        <li><a href="#services">Outdoor Living</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#approach">Our Approach</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#testimonials">Client Stories</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Contact</div>
+      <ul class="footer-links">
+        <li><a href="#contact">Start a Project</a></li>
+        <li><a href="#contact">Get a Consultation</a></li>
+        <li><a href="tel:6195550382">(619) 555-0382</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Angular credential bar — completely distinct footer treatment -->
+  <div class="footer-angle-bar">
+    <div class="footer-angle-item">
+      <div class="footer-angle-num">$120M+</div>
+      <div class="footer-angle-lbl">Completed Projects</div>
+    </div>
+    <div class="footer-angle-item">
+      <div class="footer-angle-num">340+</div>
+      <div class="footer-angle-lbl">Happy Families</div>
+    </div>
+    <div class="footer-angle-item">
+      <div class="footer-angle-num">15 YRS</div>
+      <div class="footer-angle-lbl">San Diego Experience</div>
+    </div>
+    <div class="footer-angle-item">
+      <div class="footer-angle-num">2-YR</div>
+      <div class="footer-angle-lbl">Workmanship Warranty</div>
+    </div>
+    <div class="footer-angle-item">
+      <div class="footer-angle-num">18</div>
+      <div class="footer-angle-lbl">Projects Per Year</div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>© 2024 Vance & Co. Design-Build · CSLB License #982741 · <strong>Portfolio demo by The Zaliznyak Group</strong> — zaliznyakgroup.com</div>
+    <div>Privacy · Accessibility · ¹Client-approved scope addition</div>
+  </div>
+</footer>
+
+<script>
+/* ── Before/After Slider ─────────────────────────────────────── */
+function initSlider(idx) {
+  const wrap   = document.getElementById('ba' + idx)
+  const before = document.getElementById('ba-before' + idx)
+  const handle = document.getElementById('ba-handle' + idx)
+  if (!wrap) return
+
+  let dragging = false
+  let pct = 50
+
+  function setPos(x) {
+    const rect = wrap.getBoundingClientRect()
+    pct = Math.max(5, Math.min(95, ((x - rect.left) / rect.width) * 100))
+    before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`
+    handle.style.left = pct + '%'
+  }
+
+  // Mouse
+  handle.addEventListener('mousedown', e => { dragging = true; e.preventDefault() })
+  document.addEventListener('mouseup',   () => { dragging = false })
+  wrap.addEventListener('mousemove', e => { if (dragging) setPos(e.clientX) })
+
+  // Touch
+  handle.addEventListener('touchstart', e => { dragging = true; e.preventDefault() }, { passive: false })
+  document.addEventListener('touchend',  () => { dragging = false })
+  wrap.addEventListener('touchmove', e => {
+    if (dragging) setPos(e.touches[0].clientX)
+  }, { passive: true })
+
+  // Init position
+  setPos(wrap.getBoundingClientRect().left + wrap.getBoundingClientRect().width * 0.5)
+}
+
+[0, 1, 2].forEach(initSlider)
+
+/* ── Nav scroll ─────────────────────────────────────────────── */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', scrollY > 60)
+})
+
+/* ── Reveal ──────────────────────────────────────────────────── */
+const io = new IntersectionObserver(
+  entries => entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible')
+  }),
+  { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+)
+document.querySelectorAll('.reveal').forEach(el => io.observe(el))
+
+/* ── Mobile menu ─────────────────────────────────────────────── */
+function openMob()  { document.getElementById('mobMenu').classList.add('open') }
+function closeMob() { document.getElementById('mobMenu').classList.remove('open') }
+
+/* ── Smooth scroll ───────────────────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(a =>
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'))
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); closeMob() }
+  })
+)
+</script>
+</body>
+</html>
